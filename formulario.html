@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>Formulario de Registro</title>
+  <style>
+    .divform {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .divform h2 {
+      text-align: center;
+    }
+    
+    .divform label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .divform input[type="text"],
+    .divform select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    .divform input[type="submit"] {
+      width: 20%;
+      background-color: #326094;
+      color: white;
+      padding: 10px;
+
+    }
+
+  </style>
+</head>
+<body>
+  <div class="divform">
+    <h2>Formulario</h2>
+    <form id="form_id">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="ingrese su nombre" required>
+      
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" placeholder="ingrese sus apellidos" required>
+      
+      <label for="edad">Edad:</label>
+      <input type="text" id="edad" name="edad" placeholder="ingrese su edad" required>
+      
+      <label>Sexo:</label>
+      <input type="radio" id="masculino" name="sexo" value="masculino" checked>
+      <label for="masculino">Masculino</label>
+      <input type="radio" id="femenino" name="sexo" value="femenino">
+      <label for="femenino">Femenino</label>
+      
+      <label for="situacionFamiliar">Situación Familiar:</label>
+      <select id="situacionFamiliar" name="situacionFamiliar">
+        <option value="">Selecciona una opción</option>
+        <option value="soltero">Soltero</option>
+        <option value="casado">Casado</option>
+        <option value="divorciado">Divorciado</option>
+      </select>
+      
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" placeholder="ingrese su correo electrónico" required>
+      
+      <label for="telefono">Teléfono:</label>
+      <input type="text" id="telefono" name="telefono" placeholder="ingrese su número de teléfono" required>
+      <input type="submit" value="Enviar">
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const apellidos = document.getElementById('apellidos').value;
+      const edad = document.getElementById('edad').value;
+      const sexo = document.getElementById('sexo').value;
+      const situacionFamiliar = document.getElementById('situacionFamiliar').value;
+      const email = document.getElementById('email').value;
+      const telefono = document.getElementById('telefono').value;
+
+      let valido = true;
+
+
+      if (edad < 18) {
+        alert('La edad debe ser mayor a 18 años.');
+        valido = false;
+      }
+
+  
+      const letrasAutorizadad = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      if (!letrasAutorizadad.test(email)) {
+       alert('El email no tiene un formato válido.');
+        valido = false;
+      }
+
+      const autorizadoTelefono = /^[\d\s]+$/;
+      if (!autorizadoTelefono.test(telefono)) {
+        alert('El telefono no tiene un formato válido.');
+        valido = false;
+      }
+
+      if (valido) {
+        const nombreCapitalizado = nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+        const apellidosCapitalizado = apellidos.charAt(0).toUpperCase() + apellidos.slice(1).toLowerCase();
+
+        document.getElementById('nombre').value = nombreCapitalizado;
+        document.getElementById('apellidos').value = apellidosCapitalizado;
+
+   
+        const sexoSelect = document.getElementById('sexo');
+        if (sexo === 'masculino') {
+          sexoSelect.innerHTML = '<option value="masculino" selected>Masculino</option><option value="femenino">Femenino</option>';
+        } else if (sexo === 'femenino') {
+          sexoSelect.innerHTML = '<option value="masculino">Masculino</option><option value="femenino" selected>Femenino</option>';
+        }
+        form.submit();
+      }
+    });
+  </script>
+</body>
+</html>
